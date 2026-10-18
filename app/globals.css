@@ -52,6 +52,12 @@ html.lenis, html.lenis body { height: auto; }
   0% { left: -130%; }
   50%, 100% { left: 160%; }
 }
+
+/* ---- Soft breathing glow behind the primary CTA ---- */
+@keyframes ctaGlow {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
 .btn-shimmer { position: relative; overflow: hidden; }
 .btn-shimmer::after {
   content: '';
