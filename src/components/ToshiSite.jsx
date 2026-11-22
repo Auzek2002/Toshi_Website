@@ -15,7 +15,7 @@ import ToshiCursor from './ToshiCursor';
 
 const LIEFERANDO = 'https://www.lieferando.de/en/menu/toshi-sushi-asia-kuche-freital';
 const INSTAGRAM = 'https://www.instagram.com/toshi.dresden/';
-const KNIFE_IMAGE = '/images/knife-freshness.webp';
+const MENU_PDF = '/SPEISEKARTE_FINAL_NEU.pdf';
 const COOKIE_KEY = 'toshi-cookie-consent';
 
 const GOLD = '#c9a876';
@@ -42,20 +42,15 @@ const ORDER_STORES = [
     name: 'Dresden Bühlau',
     address: 'Elisabethstraße 19',
     city: '01324 Dresden',
+    phone: '+49 351 27596610',
     lat: 51.0621074,
     lng: 13.8386589,
     postcodes: ['01097', '01099', '01237', '01277', '01279', '01307', '01309', '01324', '01326', '01328', '01454', '01477'],
     comingSoon: false,
     deliveryOnly: false,
     lieferandoUrl: 'https://www.lieferando.de/speisekarte/toshi-sushi-asia-kuche',
-    openHours: [
-      { days: [1, 2, 3, 4], open: 11 * 60 + 30, close: 21 * 60 },
-      { days: [5, 6, 0], open: 11 * 60 + 30, close: 21 * 60 + 30 },
-    ],
-    hoursRows: [
-      { days: 'Mo – Do', time: '11:30 – 21:00' },
-      { days: 'Fr – So', time: '11:30 – 21:30' },
-    ],
+    openHours: [{ days: [0, 1, 2, 3, 4, 5, 6], open: 11 * 60 + 30, close: 22 * 60 }],
+    hoursRows: [{ days: 'Mo – So', time: '11:30 – 22:00' }],
     directions: [
       { type: 'transit', text: 'Straßenbahnlinie 11 bis Endhaltestelle Bühlau, von dort nur wenige Gehminuten.' },
       { type: 'car', text: 'Parkmöglichkeiten in der Umgebung vorhanden.' },
@@ -67,14 +62,15 @@ const ORDER_STORES = [
     name: 'Freital',
     address: 'Dresdner Str. 220',
     city: '01705 Freital',
+    phone: '+49 351 81165715',
     lat: 51.0088544,
     lng: 13.6589511,
     postcodes: ['01156', '01157', '01159', '01169', '01187', '01189', '01217', '01219', '01705', '01728', '01731', '01734', '01737', '01738'],
     comingSoon: false,
     deliveryOnly: false,
     lieferandoUrl: 'https://www.lieferando.de/en/menu/toshi-sushi-asia-kuche-freital',
-    openHours: [{ days: [0, 1, 2, 3, 4, 5, 6], open: 11 * 60 + 30, close: 21 * 60 }],
-    hoursRows: [{ days: 'Mo – So', time: '11:30 – 21:00' }],
+    openHours: [{ days: [0, 1, 2, 3, 4, 5, 6], open: 11 * 60 + 30, close: 22 * 60 }],
+    hoursRows: [{ days: 'Mo – So', time: '11:30 – 22:00' }],
     directions: [
       { type: 'transit', text: 'Bushaltestelle Wehrstraße direkt am Standort. Mit der S-Bahn vom Dresdner Hauptbahnhof nur 2 Stationen bis Freital-Deuben, von dort ca. 5 Minuten zu Fuß.' },
       { type: 'car', text: 'Parkplätze direkt neben dem Restaurant vorhanden.' },
@@ -92,8 +88,8 @@ const ORDER_STORES = [
     comingSoon: false,
     deliveryOnly: true,
     lieferandoUrl: 'https://www.lieferando.de/en/menu/toshi-sushi-asia-kuche-klotzsche',
-    openHours: [{ days: [0, 1, 2, 3, 4, 5, 6], open: 11 * 60 + 30, close: 21 * 60 }],
-    hoursRows: [{ days: 'Mo – So', time: '11:30 – 21:00' }],
+    openHours: [{ days: [0, 1, 2, 3, 4, 5, 6], open: 11 * 60 + 30, close: 22 * 60 }],
+    hoursRows: [{ days: 'Mo – So', time: '11:30 – 22:00' }],
     directions: [],
   },
 ];
@@ -161,9 +157,9 @@ function Navbar({ onOrderClick }) {
         {/* Logo */}
         <a href="#" className="group relative flex items-center" data-cursor-hover>
           <img
-            src="/images/Toshi_Logo.webp"
+            src="/images/toshi-logo.webp"
             alt="Toshi Sushi & Asia Küche"
-            className="h-11 md:h-13 w-auto object-contain transition-all duration-500 group-hover:scale-105"
+            className="h-9 md:h-11 w-auto object-contain transition-all duration-500 group-hover:scale-105"
           />
         </a>
 
@@ -246,7 +242,6 @@ function Navbar({ onOrderClick }) {
 
 /* ---------- Hero ---------- */
 const HERO_IMAGES = ['/images/TOSHI_img2.webp', '/images/TOSHI_img4.webp', '/images/TOSHI_img6.webp'];
-const WORDMARK = 'Toshi'.split('');
 
 function HeroSection({ onOrderClick }) {
   const [storeOpen, setStoreOpen] = useState({});
@@ -335,26 +330,21 @@ function HeroSection({ onOrderClick }) {
           Asiatisch · Authentisch · Anders
         </motion.p>
 
-        <motion.h1
-          className="font-serif text-[#f6efdf] leading-[1.05]"
-          style={{ fontSize: 'clamp(3.4rem, 9vw, 8rem)' }}
-          initial="hidden"
-          animate="visible"
-          variants={{ visible: { transition: { staggerChildren: 0.09, delayChildren: 0.55 } } }}
-        >
-          {WORDMARK.map((ch, i) => (
-            <motion.span
-              key={i}
-              className="inline-block"
-              variants={{
-                hidden: { opacity: 0, y: 26, filter: 'blur(7px)' },
-                visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 1, ease: EASE } },
-              }}
-            >
-              {ch}
-            </motion.span>
-          ))}
-        </motion.h1>
+        <h1 className="relative leading-none">
+          <span className="sr-only">Toshi</span>
+          {/* Brush-script wordmark — revealed left to right like a pen stroke */}
+          <motion.img
+            src="/images/toshi-logo.webp"
+            alt=""
+            aria-hidden="true"
+            draggable={false}
+            initial={{ opacity: 0, clipPath: 'inset(0 100% 0 0)', filter: 'blur(6px) drop-shadow(0 6px 30px rgba(0,0,0,0.55))' }}
+            animate={{ opacity: 1, clipPath: 'inset(0 0% 0 0)', filter: 'blur(0px) drop-shadow(0 6px 30px rgba(0,0,0,0.55))' }}
+            transition={{ duration: 1.8, delay: 0.55, ease: EASE }}
+            className="block w-auto select-none"
+            style={{ width: 'clamp(250px, 44vw, 640px)' }}
+          />
+        </h1>
 
         <motion.p
           initial={{ opacity: 0 }}
@@ -362,15 +352,16 @@ function HeroSection({ onOrderClick }) {
           transition={{ duration: 1.1, delay: 1.15 }}
           className="text-[10px] md:text-xs tracking-[0.4em] uppercase text-[#f3ead9]/65 font-medium mt-5 mb-11"
         >
-          Sushi &amp; Asia Küche — Freital
+          Sushi &amp; Asia Küche
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 1.4, ease: EASE }}
-          className="flex flex-col sm:flex-row items-center gap-4 sm:gap-5"
+          className="flex flex-col items-center gap-4 sm:gap-5"
         >
+          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-5">
           <div className="relative">
             <div
               className="absolute -inset-2 rounded-full pointer-events-none"
@@ -398,6 +389,18 @@ function HeroSection({ onOrderClick }) {
               <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
             </svg>
             Tisch reservieren
+          </a>
+          </div>
+          <a
+            href={MENU_PDF}
+            {...(MENU_PDF !== '#' ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+            data-cursor-hover
+            className="group w-full inline-flex items-center justify-center gap-2.5 px-9 py-3.5 rounded-full border border-[#c9a876]/40 hover:border-[#c9a876] bg-[#14110d]/40 hover:bg-[#c9a876]/10 backdrop-blur-sm text-[#e9d4a3] hover:text-[#f6e9cf] text-[12px] md:text-[12.5px] tracking-[0.2em] uppercase font-medium transition-all duration-400"
+          >
+            <svg className="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="8" y1="13" x2="16" y2="13" /><line x1="8" y1="17" x2="13" y2="17" />
+            </svg>
+            Speisekarte als PDF
           </a>
         </motion.div>
       </motion.div>
@@ -546,87 +549,6 @@ function OrderSection({ onOrderClick }) {
             </motion.div>
           </div>
         </div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------- Freshness Guarantee ---------- */
-function FreshnessSection() {
-  const GUARANTEES = [
-    'Täglich frischer Fisch — niemals tiefgekühlt',
-    'Von Hand geschnitten, nicht maschinell',
-    'Ausgewählte Zutaten, ohne Kompromisse',
-  ];
-
-  return (
-    <section id="frische" className="relative w-full min-h-[100svh] overflow-hidden bg-[#0c0a08]">
-      {/* Full-bleed photo — slow cinematic zoom */}
-      <div className="absolute inset-0">
-        <img
-          src={KNIFE_IMAGE}
-          alt="Scharfes Messer beim Zuschneiden von frischem Fisch"
-          className="absolute inset-0 w-full h-full object-cover animate-kenburns"
-        />
-      </div>
-
-      {/* Scrim — heavy, uniform darkening so text is legible regardless of what's behind it */}
-      <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(100deg, rgba(8,7,5,0.97) 0%, rgba(8,7,5,0.93) 32%, rgba(8,7,5,0.72) 54%, rgba(8,7,5,0.4) 75%, rgba(8,7,5,0.22) 100%)' }} />
-      <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(to top, rgba(8,7,5,0.92) 0%, rgba(8,7,5,0.25) 30%, rgba(8,7,5,0.25) 75%, rgba(8,7,5,0.6) 100%)' }} />
-      <div className="absolute inset-0 bg-[#0c0a08]/25 pointer-events-none" />
-      <div className="absolute inset-0 grain-overlay opacity-[0.15] pointer-events-none" />
-
-      {/* Ambient watermark kanji */}
-      <span className="font-serif absolute -right-6 bottom-4 text-[18rem] leading-none text-[#c9a876]/[0.05] select-none hidden lg:block pointer-events-none" aria-hidden="true">鮮</span>
-
-      {/* Hanko stamp */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.9, delay: 0.5, ease: EASE }}
-        className="absolute top-28 md:top-32 left-6 md:left-12 w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center shadow-[0_10px_28px_rgba(140,42,38,0.4)] z-10"
-        style={{ background: STAMP }}
-      >
-        <span className="font-serif text-[#f3ead9] text-xl md:text-2xl">鮮</span>
-      </motion.div>
-
-      {/* Content — overlaid on the scrim */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 min-h-[100svh] flex items-center py-28">
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-60px' }}
-          className="max-w-xl"
-        >
-          <p className="font-accent text-2xl text-[#e9d4a3] mb-4" style={{ textShadow: '0 2px 16px rgba(0,0,0,0.6)' }}>Frischegarantie</p>
-          <h2 className="font-serif text-white leading-[1.03] mb-7" style={{ fontSize: 'clamp(3rem, 6vw, 5.2rem)', textShadow: '0 4px 28px rgba(0,0,0,0.65)' }}>
-            Frische, die man schmeckt.
-          </h2>
-          <p className="text-lg text-[#f6efdf]/90 leading-relaxed mb-9 max-w-lg" style={{ textShadow: '0 2px 12px rgba(0,0,0,0.55)' }}>
-            Unser Fisch wird täglich frisch geliefert und von Hand geschnitten — nie aus der Tiefkühltruhe, nie auf Vorrat. Mit geschärften Klingen und geschultem Auge verwandeln wir nur ausgewählte Zutaten in jedes Gericht, das wir servieren.
-          </p>
-          <ul className="flex flex-col gap-4 mb-10">
-            {GUARANTEES.map((g, i) => (
-              <motion.li
-                key={g}
-                initial={{ opacity: 0, x: -14 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.75, delay: i * 0.12, ease: EASE }}
-                className="flex items-center gap-3 text-[15px] text-[#f6efdf]/95 font-medium"
-                style={{ textShadow: '0 2px 10px rgba(0,0,0,0.55)' }}
-              >
-                <span className="w-1.5 h-1.5 rotate-45 flex-shrink-0" style={{ background: GOLD }} />
-                {g}
-              </motion.li>
-            ))}
-          </ul>
-          <a href="#speisekarte" data-cursor-hover className="group inline-flex items-center gap-2 text-[#f6efdf]/95 hover:text-[#c9a876] text-[11px] tracking-[0.2em] uppercase font-medium transition-colors duration-400">
-            <span className="pb-0.5 border-b border-current/50 group-hover:border-current">Zur Speisekarte</span>
-          </a>
-        </motion.div>
       </div>
     </section>
   );
@@ -836,15 +758,19 @@ function MenuSection({ onItemClick }) {
           {String(active + 1).padStart(2, '0')}&nbsp;&nbsp;/&nbsp;&nbsp;{String(total).padStart(2, '0')}
         </span>
 
-        <a
-          href={LIEFERANDO}
-          target="_blank"
-          rel="noopener noreferrer"
-          data-cursor-hover
-          className="group mt-2 inline-flex items-center gap-2 px-7 py-3 rounded-full border border-[#c9a876]/25 text-[#e5d6ae]/75 hover:text-[#14110d] hover:border-[#c9a876] hover:bg-[#c9a876] text-[11px] font-medium tracking-[0.16em] uppercase transition-all duration-400"
-        >
-          Ganze Speisekarte ansehen
-        </a>
+        <div className="mt-2 flex items-center">
+          <a
+            href={MENU_PDF}
+            {...(MENU_PDF !== '#' ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+            data-cursor-hover
+            className="group inline-flex items-center gap-2 px-7 py-3 rounded-full border border-[#c9a876]/25 text-[#e5d6ae]/75 hover:text-[#14110d] hover:border-[#c9a876] hover:bg-[#c9a876] text-[11px] font-medium tracking-[0.16em] uppercase transition-all duration-400"
+          >
+            <svg className="w-3.5 h-3.5 opacity-70 group-hover:opacity-100 transition-opacity duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="8" y1="13" x2="16" y2="13" /><line x1="8" y1="17" x2="13" y2="17" />
+            </svg>
+            Speisekarte als PDF
+          </a>
+        </div>
       </motion.div>
 
       {/* Closing pull-quote — the kitchen's philosophy */}
@@ -1500,8 +1426,8 @@ function PhotoWall() {
       </motion.div>
 
       {/* DESKTOP bento */}
-      <div className="hidden md:block max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-        <div className="grid grid-cols-12 grid-rows-2 gap-3" style={{ height: 640 }}>
+      <div className="hidden md:block w-full relative z-10">
+        <div className="grid grid-cols-12 grid-rows-2 gap-3" style={{ height: 'clamp(560px, 50vw, 900px)' }}>
           {[
             { p: PHOTOS[0], cls: 'col-span-5 row-span-2' },
             { p: PHOTOS[1], cls: 'col-span-4 row-span-1' },
@@ -1529,7 +1455,7 @@ function PhotoWall() {
       </div>
 
       {/* MOBILE stacked */}
-      <div className="md:hidden px-4 space-y-3 relative z-10">
+      <div className="md:hidden w-full space-y-3 relative z-10">
         <motion.div variants={cardVariants(0)} initial="hidden" whileInView="visible" viewport={{ once: true }} className="relative w-full rounded-[3px] overflow-hidden group border border-[#c9a876]/10" style={{ aspectRatio: '4/3', boxShadow: '0 16px 48px rgba(0,0,0,0.45)' }}>
           <img src={PHOTOS[0].src} alt="Toshi Sushi" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
         </motion.div>
@@ -1581,12 +1507,74 @@ const DIRECTION_LABELS = {
   bike: 'Mit dem Fahrrad',
 };
 
+const CONTACT_ICONS = {
+  phone: (
+    <svg className="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" />
+    </svg>
+  ),
+  instagram: (
+    <svg className="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none" />
+    </svg>
+  ),
+  order: (
+    <svg className="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+      <path d="M3 6h18" />
+      <path d="M16 10a4 4 0 01-8 0" />
+    </svg>
+  ),
+};
+
+const ArrowIcon = ({ className = 'w-4 h-4' }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round">
+    <path d="M5 12h14M13 5l7 7-7 7" />
+  </svg>
+);
+
+function ContactTile({ icon, label, value, href, onClick, external }) {
+  const cls = 'group flex items-center gap-4 w-full text-left rounded-[6px] bg-white/70 hover:bg-white border border-[#14110d]/[0.06] hover:border-[#8c2a26]/25 px-4 py-3.5 transition-all duration-300 shadow-[0_2px_10px_rgba(20,17,13,0.04)] hover:shadow-[0_10px_28px_rgba(20,17,13,0.08)]';
+  const inner = (
+    <>
+      <span className="shrink-0 w-11 h-11 rounded-[6px] border border-[#8c2a26]/20 bg-[#8c2a26]/[0.06] flex items-center justify-center text-[#8c2a26] transition-colors duration-300 group-hover:bg-[#8c2a26] group-hover:text-[#f3ead9]">
+        {icon}
+      </span>
+      <span className="flex-1 min-w-0">
+        <span className="block text-[9.5px] tracking-[0.26em] uppercase text-[#14110d]/45 font-medium mb-0.5">{label}</span>
+        <span className="block text-[15px] font-medium text-[#14110d] truncate">{value}</span>
+      </span>
+      <span className="text-[#14110d]/25 group-hover:text-[#8c2a26] transition-all duration-300 group-hover:translate-x-0.5">
+        <ArrowIcon />
+      </span>
+    </>
+  );
+  if (onClick) return <button type="button" onClick={onClick} data-cursor-hover className={cls}>{inner}</button>;
+  return (
+    <a href={href} data-cursor-hover className={cls} {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
+      {inner}
+    </a>
+  );
+}
+
 function LocationSection({ mapsConsent, onEnableMaps, onOrderClick }) {
   const [activeId, setActiveId] = useState(ORDER_STORES[0].id);
+  const [openNow, setOpenNow] = useState(null);
   const store = ORDER_STORES.find((s) => s.id === activeId) ?? ORDER_STORES[0];
   const hasMap = store.lat != null && store.lng != null;
   const mapSrc = hasMap ? `https://maps.google.com/maps?q=${store.lat},${store.lng}&t=&z=16&ie=UTF8&iwloc=&output=embed` : null;
   const directionsUrl = hasMap ? `https://www.google.com/maps/dir/?api=1&destination=${store.lat},${store.lng}` : null;
+  const dailyHours = store.hoursRows.length === 1 && store.hoursRows[0].days === 'Mo – So';
+
+  // Live open/closed status — computed on the client only to avoid hydration mismatches
+  useEffect(() => {
+    const update = () => setOpenNow(checkStoreOpen(store.openHours));
+    update();
+    const t = setInterval(update, 60000);
+    return () => clearInterval(t);
+  }, [store]);
 
   return (
     <section id="kontakt" className="relative py-24 md:py-36 overflow-hidden bg-[#f3ead9]">
@@ -1594,7 +1582,7 @@ function LocationSection({ mapsConsent, onEnableMaps, onOrderClick }) {
 
       <div className="relative max-w-7xl mx-auto px-6 md:px-12">
         {/* Heading + location selector */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 mb-14 md:mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 mb-12 md:mb-16">
           <motion.div
             variants={fadeUp}
             initial="hidden"
@@ -1602,12 +1590,17 @@ function LocationSection({ mapsConsent, onEnableMaps, onOrderClick }) {
             viewport={{ once: true, margin: '-80px' }}
             className="flex flex-col justify-center"
           >
-            <p className="font-accent text-2xl text-[#8c2a26] mb-4">Kontakt</p>
-            <h2 className="font-serif text-[#14110d] leading-[1.05] mb-6" style={{ fontSize: 'clamp(2.6rem, 5vw, 4.6rem)' }}>
-              Besuche uns.
+            <div className="flex items-center gap-3 mb-5">
+              <span className="h-px w-8 bg-[#8c2a26]" />
+              <span className="text-[11px] tracking-[0.32em] uppercase text-[#8c2a26] font-medium">Toshi Sushi</span>
+            </div>
+            <h2 className="font-serif text-[#14110d] leading-[0.98] mb-7" style={{ fontSize: 'clamp(2.8rem, 5.6vw, 5rem)' }}>
+              Unsere
+              <br />
+              <span className="font-accent italic text-[#8c2a26]">Standorte</span>
             </h2>
-            <p className="text-lg text-[#14110d]/70 leading-relaxed max-w-sm">
-              Drei Standorte in und um Dresden — wähle deinen hier aus.
+            <p className="text-lg text-[#14110d]/75 leading-relaxed max-w-sm">
+              Besuche uns an einem unserer Standorte in der Region Dresden.
             </p>
           </motion.div>
 
@@ -1664,151 +1657,171 @@ function LocationSection({ mapsConsent, onEnableMaps, onOrderClick }) {
           </motion.div>
         </div>
 
-        {/* Active location panel */}
+        {/* Active location — map card left, hours + contact cards right */}
         <AnimatePresence mode="wait">
-          {!hasMap ? (
-            <motion.div
-              key={`${store.id}-delivery`}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.35 }}
-              className="rounded-[4px] border-2 border-dashed border-[#14110d]/15 bg-[#14110d]/[0.02] flex flex-col items-center justify-center text-center py-20 md:py-28 px-6"
-            >
-              <span className="font-serif text-4xl text-[#8c2a26]/60 mb-5">鮨</span>
-              <span className="text-[10px] tracking-[0.3em] uppercase text-[#8c2a26] font-medium mb-3">Nur Lieferung</span>
-              <h3 className="font-serif text-3xl md:text-4xl text-[#14110d] mb-4">{store.name}</h3>
-              <p className="text-[15px] text-[#14110d]/65 max-w-md leading-relaxed mb-8">
-                Dieser Standort beliefert dein Gebiet, hat aber keinen eigenen Besucherstandort zum Abholen vor Ort.
-              </p>
-              <a
-                href={store.lieferandoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-cursor-hover
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#14110d] hover:bg-[#221d17] text-[#f3ead9] text-xs tracking-[0.14em] uppercase font-medium transition-all duration-300 border border-[#c9a876]/40 hover:border-[#c9a876]"
-              >
-                Jetzt bestellen
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </a>
-            </motion.div>
-          ) : (
-            <motion.div
-              key={store.id}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.35 }}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start"
-            >
-              {/* Map */}
-              <div>
-                <div className="relative min-h-[380px] aspect-[4/3] rounded-[4px] overflow-hidden shadow-[0_24px_64px_rgba(20,17,13,0.22)] border border-[#14110d]/10">
-                  {mapsConsent ? (
-                    <iframe
-                      title={`Toshi Sushi ${store.name}`}
-                      src={mapSrc}
-                      className="w-full h-full"
-                      style={{ border: 0, filter: 'saturate(0.75) sepia(0.12)' }}
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                      allowFullScreen
-                    />
+          <motion.div
+            key={store.id}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.35 }}
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-[1.45fr_1fr] gap-6 items-stretch">
+              {/* Map card */}
+              <div className="flex flex-col rounded-[8px] overflow-hidden bg-white/60 border border-[#14110d]/10 shadow-[0_24px_64px_rgba(20,17,13,0.14)]">
+                <div className="relative flex-1 min-h-[340px] md:min-h-[440px]">
+                  {hasMap ? (
+                    mapsConsent ? (
+                      <iframe
+                        title={`Toshi Sushi ${store.name}`}
+                        src={mapSrc}
+                        className="absolute inset-0 w-full h-full"
+                        style={{ border: 0, filter: 'saturate(0.75) sepia(0.12)' }}
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        allowFullScreen
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex flex-col items-center justify-center text-center gap-4 bg-[#14110d] px-8">
+                        <span className="font-serif text-3xl text-[#c9a876]/70">鮨</span>
+                        <p className="text-sm text-[#f3ead9]/75 max-w-[280px] leading-relaxed">
+                          Für die Karte wird eine Verbindung zu Google Maps hergestellt.
+                        </p>
+                        <button
+                          type="button"
+                          onClick={onEnableMaps}
+                          data-cursor-hover
+                          className="mt-1 inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#c9a876]/40 hover:border-[#c9a876] hover:bg-[#c9a876] text-[#f3ead9] hover:text-[#14110d] text-xs tracking-[0.14em] uppercase font-medium transition-all duration-300"
+                        >
+                          Karte anzeigen
+                        </button>
+                      </div>
+                    )
                   ) : (
-                    <div className="w-full h-full flex flex-col items-center justify-center text-center gap-4 bg-[#14110d] px-8">
-                      <span className="font-serif text-3xl text-[#c9a876]/70">鮨</span>
-                      <p className="text-sm text-[#f3ead9]/75 max-w-[280px] leading-relaxed">
-                        Für die Karte wird eine Verbindung zu Google Maps hergestellt.
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center bg-[#14110d] px-8">
+                      <div className="absolute inset-0 grain-overlay opacity-[0.15] pointer-events-none" />
+                      <span className="font-serif text-5xl text-[#c9a876]/60 mb-5">鮨</span>
+                      <span className="text-[10px] tracking-[0.3em] uppercase text-[#c9a876] font-medium mb-3">Nur Lieferung</span>
+                      <h3 className="font-serif text-3xl md:text-4xl text-[#f6efdf] mb-4">{store.name}</h3>
+                      <p className="text-[15px] text-[#f3ead9]/65 max-w-md leading-relaxed">
+                        Dieser Standort beliefert dein Gebiet, hat aber keinen eigenen Besucherstandort zum Abholen vor Ort.
                       </p>
-                      <button
-                        type="button"
-                        onClick={onEnableMaps}
-                        data-cursor-hover
-                        className="mt-1 inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#c9a876]/40 hover:border-[#c9a876] hover:bg-[#c9a876] text-[#f3ead9] hover:text-[#14110d] text-xs tracking-[0.14em] uppercase font-medium transition-all duration-300"
-                      >
-                        Karte anzeigen
-                      </button>
                     </div>
                   )}
                 </div>
 
-                {/* Address recap + directions CTA */}
-                <div className="flex items-center justify-between gap-4 flex-wrap mt-6 pt-6 border-t border-[#14110d]/10">
-                  <div>
-                    <p className="text-sm font-medium text-[#14110d]">Toshi Sushi — {store.name}</p>
-                    <p className="text-sm text-[#14110d]/70">{store.address} · {store.city}</p>
+                {/* Address bar */}
+                <div className="flex items-center justify-between gap-4 flex-wrap px-6 py-5 border-t border-[#14110d]/10 bg-white/80">
+                  <div className="min-w-0">
+                    <p className="text-[10px] tracking-[0.28em] uppercase text-[#8c2a26] font-medium mb-1">{hasMap ? 'Adresse' : 'Lieferservice'}</p>
+                    <p className="text-[15px] font-medium text-[#14110d]">
+                      {hasMap ? `${store.address} · ${store.city}` : `Toshi Sushi — ${store.name}`}
+                    </p>
                   </div>
                   <a
-                    href={directionsUrl}
+                    href={hasMap ? directionsUrl : store.lieferandoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     data-cursor-hover
-                    className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#14110d] hover:bg-[#221d17] text-[#f3ead9] text-xs tracking-[0.14em] uppercase font-medium transition-all duration-300 border border-[#c9a876]/40 hover:border-[#c9a876]"
+                    className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#8c2a26] hover:bg-[#a3332e] text-[#f6efdf] text-xs tracking-[0.14em] uppercase font-medium transition-all duration-300 shadow-[0_8px_22px_rgba(140,42,38,0.3)] hover:-translate-y-0.5"
                   >
-                    Route planen
-                    <svg className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M5 12h14M13 5l7 7-7 7" />
-                    </svg>
+                    {hasMap ? 'Route planen' : 'Jetzt bestellen'}
+                    <span className="transition-transform duration-300 group-hover:translate-x-0.5"><ArrowIcon className="w-3.5 h-3.5" /></span>
                   </a>
                 </div>
               </div>
 
-              {/* Info column */}
-              <div className="flex flex-col gap-10">
-                <div>
-                  <p className="text-[11px] tracking-[0.24em] uppercase text-[#14110d]/45 font-medium mb-3">Öffnungszeiten</p>
-                  <div className="space-y-2 max-w-[300px]">
-                    {store.hoursRows.map((h) => (
-                      <div key={h.days} className="flex items-center justify-between border-b border-[#14110d]/10 pb-2">
-                        <span className="text-sm font-normal text-[#14110d]/70">{h.days}</span>
-                        <span className="text-sm font-medium text-[#14110d]">{h.time}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+              {/* Right column */}
+              <div className="flex flex-col gap-6">
+                {/* Opening hours card */}
+                <div
+                  className="relative overflow-hidden rounded-[8px] p-7 md:p-8 text-[#f6efdf]"
+                  style={{
+                    background: 'linear-gradient(145deg, #1d1813 0%, #14110d 55%, #0f0c09 100%)',
+                    boxShadow: '0 28px 70px rgba(20,17,13,0.35), 0 0 0 1px rgba(201,168,118,0.22)',
+                  }}
+                >
+                  <div className="absolute -top-20 -right-16 w-64 h-64 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(201,168,118,0.2) 0%, transparent 65%)' }} />
+                  <div className="absolute inset-0 grain-overlay opacity-[0.12] pointer-events-none" />
+                  <span className="font-serif absolute -right-3 -bottom-8 text-[9rem] leading-none text-[#c9a876]/[0.06] select-none pointer-events-none" aria-hidden="true">時</span>
 
-                {/* Anfahrt — how to reach us */}
-                <div>
-                  <p className="text-[11px] tracking-[0.24em] uppercase text-[#14110d]/45 font-medium mb-4">Anfahrt</p>
-                  <div className="space-y-5 max-w-md">
-                    {store.directions.map((d) => (
-                      <div key={d.type} className="flex items-start gap-4">
-                        <span className="shrink-0 w-10 h-10 rounded-full border border-[#8c2a26]/25 bg-[#8c2a26]/[0.06] flex items-center justify-center text-[#8c2a26]">
-                          {DIRECTION_ICONS[d.type]}
+                  <div className="relative">
+                    <div className="flex items-center justify-between gap-3 mb-5">
+                      <span className="inline-flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase text-[#c9a876] font-medium">
+                        <span className="w-1.5 h-1.5 rotate-45" style={{ background: GOLD }} />
+                        Öffnungszeiten
+                      </span>
+                      {openNow != null && (
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9.5px] tracking-[0.16em] uppercase font-medium border ${openNow ? 'border-[#8fae86]/40 text-[#a9c7a0] bg-[#8fae86]/10' : 'border-[#c9a876]/25 text-[#f3ead9]/55 bg-white/[0.03]'}`}>
+                          <span className="relative flex w-1.5 h-1.5">
+                            {openNow && <span className="absolute inline-flex w-full h-full rounded-full bg-[#8fae86] opacity-70 animate-ping" />}
+                            <span className="relative inline-flex w-1.5 h-1.5 rounded-full" style={{ background: openNow ? '#8fae86' : STAMP }} />
+                          </span>
+                          {openNow ? 'Jetzt geöffnet' : 'Geschlossen'}
                         </span>
-                        <div>
-                          <p className="text-sm font-medium text-[#14110d] mb-0.5">{DIRECTION_LABELS[d.type]}</p>
-                          <p className="text-sm text-[#14110d]/75 leading-relaxed">{d.text}</p>
+                      )}
+                    </div>
+
+                    <h3 className="font-serif leading-[1.02] mb-6" style={{ fontSize: 'clamp(2rem, 3.2vw, 2.7rem)' }}>
+                      {dailyHours ? (
+                        <>Täglich <span className="font-accent italic text-[#e5cb99]">geöffnet.</span></>
+                      ) : (
+                        <>Wir sind <span className="font-accent italic text-[#e5cb99]">für dich da.</span></>
+                      )}
+                    </h3>
+
+                    <div className="h-px w-full mb-5" style={{ background: 'linear-gradient(to right, rgba(201,168,118,0.45), rgba(201,168,118,0.08))' }} />
+
+                    <div className="space-y-3">
+                      {store.hoursRows.map((h) => (
+                        <div key={h.days} className="flex items-baseline justify-between gap-4">
+                          <span className="text-sm text-[#f3ead9]/70">{h.days}</span>
+                          <span className="font-serif text-xl md:text-2xl tabular-nums text-[#f6efdf]">{h.time}</span>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-3">
-                  <button
-                    type="button"
-                    onClick={onOrderClick}
-                    data-cursor-hover
-                    className="group inline-flex items-center gap-2.5 px-7 py-3.5 bg-[#14110d] hover:bg-[#221d17] text-[#f3ead9] font-medium text-xs tracking-[0.14em] uppercase rounded-full transition-all duration-400 border border-[#c9a876]/40 hover:border-[#c9a876] hover:-translate-y-0.5"
-                  >
-                    Online Bestellen
-                  </button>
-                  <a
-                    href={INSTAGRAM}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    data-cursor-hover
-                    className="inline-flex items-center gap-2.5 px-7 py-3.5 border border-[#14110d]/20 hover:border-[#8c2a26]/50 text-[#14110d] hover:text-[#8c2a26] font-medium text-xs tracking-[0.14em] uppercase rounded-full transition-all duration-400"
-                  >
-                    Instagram
-                  </a>
+                {/* Contact card */}
+                <div className="flex-1 rounded-[8px] p-6 md:p-7 bg-[#14110d]/[0.035] border border-[#14110d]/[0.08]">
+                  <span className="inline-flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase text-[#14110d]/55 font-medium mb-5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#8c2a26]" />
+                    Kontakt
+                  </span>
+                  <div className="space-y-3">
+                    {store.phone && (
+                      <ContactTile
+                        icon={CONTACT_ICONS.phone}
+                        label="Telefon"
+                        value={store.phone}
+                        href={`tel:${store.phone.replace(/\s+/g, '')}`}
+                      />
+                    )}
+                    <ContactTile icon={CONTACT_ICONS.order} label="Online bestellen" value="Lieferung & Abholung" onClick={onOrderClick} />
+                    <ContactTile icon={CONTACT_ICONS.instagram} label="Instagram" value="@toshi.dresden" href={INSTAGRAM} external />
+                  </div>
                 </div>
               </div>
-            </motion.div>
-          )}
+            </div>
+
+            {/* Anfahrt — how to reach us */}
+            {store.directions.length > 0 && (
+              <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+                {store.directions.map((d) => (
+                  <div key={d.type} className="flex items-start gap-4 rounded-[8px] p-5 bg-white/50 border border-[#14110d]/[0.07]">
+                    <span className="shrink-0 w-10 h-10 rounded-full border border-[#8c2a26]/25 bg-[#8c2a26]/[0.06] flex items-center justify-center text-[#8c2a26]">
+                      <span className="w-5 h-5 block [&>svg]:w-full [&>svg]:h-full">{DIRECTION_ICONS[d.type]}</span>
+                    </span>
+                    <div>
+                      <p className="text-sm font-medium text-[#14110d] mb-1">{DIRECTION_LABELS[d.type]}</p>
+                      <p className="text-sm text-[#14110d]/70 leading-relaxed">{d.text}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </motion.div>
         </AnimatePresence>
       </div>
     </section>
@@ -1816,20 +1829,26 @@ function LocationSection({ mapsConsent, onEnableMaps, onOrderClick }) {
 }
 
 /* ---------- Instagram ---------- */
-const INSTAGRAM_POST_URL = 'https://www.instagram.com/p/DQmgkgKDXWb/';
-const INSTAGRAM_BLOCKQUOTE = `<blockquote class="instagram-media" data-instgrm-permalink="${INSTAGRAM_POST_URL}?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:1px;max-width:540px;min-width:326px;padding:0;width:99.375%;width:calc(100% - 2px);"><div style="padding:16px;"><a href="${INSTAGRAM_POST_URL}?utm_source=ig_embed&amp;utm_campaign=loading" style="background:#FFFFFF;line-height:0;padding:0 0;text-align:center;text-decoration:none;width:100%;" target="_blank"><div style="display:flex;flex-direction:row;align-items:center;"><div style="background-color:#F4F4F4;border-radius:50%;flex-grow:0;height:40px;margin-right:14px;width:40px;"></div><div style="display:flex;flex-direction:column;flex-grow:1;justify-content:center;"><div style="background-color:#F4F4F4;border-radius:4px;flex-grow:0;height:14px;margin-bottom:6px;width:100px;"></div><div style="background-color:#F4F4F4;border-radius:4px;flex-grow:0;height:14px;width:60px;"></div></div></div><div style="padding:19% 0;"></div><div style="display:block;height:50px;margin:0 auto 12px;width:50px;"><svg width="50px" height="50px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(-511.000000, -20.000000)" fill="#000000"><g><path d="M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631"></path></g></g></g></svg></div><div style="padding-top:8px;"><div style="color:#3897f0;font-family:Arial,sans-serif;font-size:14px;font-style:normal;font-weight:550;line-height:18px;">View this post on Instagram</div></div><div style="padding:12.5% 0;"></div><div style="display:flex;flex-direction:row;margin-bottom:14px;align-items:center;"><div><div style="background-color:#F4F4F4;border-radius:50%;height:12.5px;width:12.5px;transform:translateX(0px) translateY(7px);"></div><div style="background-color:#F4F4F4;height:12.5px;transform:rotate(-45deg) translateX(3px) translateY(1px);width:12.5px;flex-grow:0;margin-right:14px;margin-left:2px;"></div><div style="background-color:#F4F4F4;border-radius:50%;height:12.5px;width:12.5px;transform:translateX(9px) translateY(-18px);"></div></div><div style="margin-left:8px;"><div style="background-color:#F4F4F4;border-radius:50%;flex-grow:0;height:20px;width:20px;"></div><div style="width:0;height:0;border-top:2px solid transparent;border-left:6px solid #f4f4f4;border-bottom:2px solid transparent;transform:translateX(16px) translateY(-4px) rotate(30deg)"></div></div><div style="margin-left:auto;"><div style="width:0px;border-top:8px solid #F4F4F4;border-right:8px solid transparent;transform:translateY(16px);"></div><div style="background-color:#F4F4F4;flex-grow:0;height:12px;width:16px;transform:translateY(-4px);"></div><div style="width:0;height:0;border-top:8px solid #F4F4F4;border-left:8px solid transparent;transform:translateY(-4px) translateX(8px);"></div></div></div><div style="display:flex;flex-direction:column;flex-grow:1;justify-content:center;margin-bottom:24px;"><div style="background-color:#F4F4F4;border-radius:4px;flex-grow:0;height:14px;margin-bottom:6px;width:224px;"></div><div style="background-color:#F4F4F4;border-radius:4px;flex-grow:0;height:14px;width:144px;"></div></div></a><p style="color:#c9c8cd;font-family:Arial,sans-serif;font-size:14px;line-height:17px;margin-bottom:0;margin-top:8px;overflow:hidden;padding:8px 0 7px;text-align:center;text-overflow:ellipsis;white-space:nowrap;"><a href="${INSTAGRAM_POST_URL}?utm_source=ig_embed&amp;utm_campaign=loading" style="color:#c9c8cd;font-family:Arial,sans-serif;font-size:14px;font-style:normal;font-weight:normal;line-height:17px;text-decoration:none;" target="_blank">A post shared by Toshi Sushi &amp; Asia Küche (@toshi.dresden)</a></p></div></blockquote>`;
+const INSTAGRAM_POSTS = [
+  'https://www.instagram.com/p/DPOtbrNjLO6/',
+  'https://www.instagram.com/p/DPT2i68jchw/',
+  'https://www.instagram.com/p/Df94berxJiI/',
+  'https://www.instagram.com/p/Ddjf2bANpWO/',
+];
+const instagramBlockquote = (url) => `<blockquote class="instagram-media" data-instgrm-permalink="${url}?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:3px;margin:0;max-width:540px;min-width:326px;padding:0;width:100%;"><div style="padding:16px;"><a href="${url}?utm_source=ig_embed&amp;utm_campaign=loading" style="display:block;padding:40% 0;text-align:center;color:#3897f0;font-family:Arial,sans-serif;font-size:14px;font-weight:550;text-decoration:none;" target="_blank" rel="noopener noreferrer">Beitrag auf Instagram ansehen</a></div></blockquote>`;
 
 function InstagramSection() {
   const ref = useRef(null);
-  const embedRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
   const y = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const embedRefs = useRef([]);
 
-  // Insert the blockquote via ref so React never overwrites it after mount,
+  // Insert each blockquote via ref so React never overwrites it after mount,
   // then trigger process() with retries to cover all timing scenarios.
   useEffect(() => {
-    if (!embedRef.current) return;
-    embedRef.current.innerHTML = INSTAGRAM_BLOCKQUOTE;
+    embedRefs.current.forEach((el, i) => {
+      if (el) el.innerHTML = instagramBlockquote(INSTAGRAM_POSTS[i]);
+    });
 
     const tryProcess = () => window.instgrm?.Embeds.process();
     tryProcess();
@@ -1908,57 +1927,46 @@ function InstagramSection() {
         </motion.div>
       </div>
 
-      {/* Content — philosophy left / embed right */}
-      <div className="relative max-w-7xl mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.6fr] gap-12 lg:gap-16 items-start">
-          {/* Left — philosophy quote */}
-          <motion.div style={{ y }} className="hidden lg:block">
+      {/* Philosophy quote */}
+      <motion.div style={{ y }} className="relative max-w-3xl mx-auto px-6 text-center mb-14 md:mb-20">
+        <motion.blockquote
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 1.1, delay: 0.1 }}
+          className="font-serif text-[#f3ead9]/85 leading-[1.15]"
+          style={{ fontSize: 'clamp(1.8rem, 3.6vw, 2.8rem)' }}
+        >
+          Gutes Sushi wird nicht zusammengestellt.
+          <br />
+          <span className="font-accent italic text-[#e5cb99]">Es wird gemeistert.</span>
+        </motion.blockquote>
+        <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.4 }} className="mt-7 flex items-center justify-center gap-4">
+          <div className="h-px w-8 bg-[#c9a876]/40" />
+          <span className="text-[10px] tracking-[0.4em] uppercase text-[#f3ead9]/30 font-medium">Toshi · Freital</span>
+          <div className="h-px w-8 bg-[#c9a876]/40" />
+        </motion.div>
+      </motion.div>
+
+      {/* Instagram posts — 2×2 grid */}
+      <div className="relative max-w-[1180px] mx-auto px-4 md:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-start justify-items-center">
+          {INSTAGRAM_POSTS.map((url, i) => (
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="font-serif text-[11rem] leading-none text-[#c9a876]/[0.08] select-none -mb-14 -ml-3"
-              aria-hidden="true"
-            >
-              &ldquo;
-            </motion.div>
-            <motion.blockquote
-              initial={{ opacity: 0, y: 24 }}
+              key={url}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 1.1, delay: 0.1 }}
-              className="font-serif text-4xl md:text-[3rem] text-[#f3ead9]/85 leading-[1.1] pl-1"
+              transition={{ duration: 1, delay: 0.1 + i * 0.12, ease: EASE }}
+              className="relative w-full max-w-[540px] min-w-0"
             >
-              Gutes Sushi wird nicht
-              <br />
-              zusammengestellt.
-              <br />
-              <span className="font-accent italic text-[#e5cb99]">Es wird gemeistert.</span>
-            </motion.blockquote>
-            <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.4 }} className="mt-8 flex items-center gap-4">
-              <div className="h-px w-8 bg-[#c9a876]/40" />
-              <span className="text-[10px] tracking-[0.4em] uppercase text-[#f3ead9]/30 font-medium">Toshi · Freital</span>
-            </motion.div>
-          </motion.div>
-
-          {/* Right — Instagram embed */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="flex justify-center w-full min-w-0"
-          >
-            <div className="relative w-full max-w-[540px]">
-              <div className="absolute -inset-6 rounded-3xl pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(201,168,118,0.1) 0%, transparent 65%)' }} />
               <div
-                ref={embedRef}
+                ref={(el) => { embedRefs.current[i] = el; }}
                 className="relative rounded-2xl overflow-hidden w-full"
-                style={{ boxShadow: '0 0 0 1px rgba(201,168,118,0.2), 0 40px 100px rgba(0,0,0,0.75), 0 0 0 5px rgba(201,168,118,0.04)' }}
+                style={{ boxShadow: '0 0 0 1px rgba(201,168,118,0.2), 0 30px 80px rgba(0,0,0,0.7), 0 0 0 5px rgba(201,168,118,0.04)' }}
               />
-            </div>
-          </motion.div>
+            </motion.div>
+          ))}
         </div>
       </div>
 
@@ -1988,7 +1996,7 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 mb-16">
           {/* Brand */}
           <div>
-            <img src="/images/Toshi_Logo.webp" alt="Toshi Sushi & Asia Küche" className="h-16 w-auto object-contain mb-5" loading="lazy" />
+            <img src="/images/toshi-logo.webp" alt="Toshi Sushi & Asia Küche" className="h-14 w-auto object-contain mb-5" loading="lazy" />
             <p className="text-sm text-[#f3ead9]/75 font-normal leading-relaxed max-w-[280px]">
               Asiatisch. Authentisch. Anders. Frisches Sushi und Asia-Küche in Freital — von Hand gemacht, mit Respekt vor der Zutat.
             </p>
@@ -2043,12 +2051,22 @@ function Footer() {
           {/* Kontakt */}
           <div>
             <p className="text-[11px] tracking-[0.3em] uppercase text-[#c9a876]/85 font-medium mb-5">Kontakt</p>
-            <p className="text-sm font-medium text-[#f3ead9]/85 mb-1">Dresdner Str. 106</p>
-            <p className="text-sm font-normal text-[#f3ead9]/60 mb-5">01705 Freital</p>
+            <div className="space-y-3 mb-6">
+              {ORDER_STORES.filter((st) => st.phone).map((st) => (
+                <div key={st.id}>
+                  <p className="text-sm font-medium text-[#f3ead9]/85">{st.name}</p>
+                  <a
+                    href={`tel:${st.phone.replace(/\s+/g, '')}`}
+                    data-cursor-hover
+                    className="text-sm font-normal text-[#f3ead9]/60 hover:text-[#c9a876] transition-colors duration-300"
+                  >
+                    {st.phone}
+                  </a>
+                </div>
+              ))}
+            </div>
             <div className="space-y-1.5 text-sm">
-              <div className="flex justify-between max-w-[220px]"><span className="text-[#f3ead9]/60 font-normal">Mo – Do</span><span className="text-[#f3ead9]/85 font-medium">11:00 – 22:00</span></div>
-              <div className="flex justify-between max-w-[220px]"><span className="text-[#f3ead9]/60 font-normal">Fr – Sa</span><span className="text-[#f3ead9]/85 font-medium">11:00 – 23:00</span></div>
-              <div className="flex justify-between max-w-[220px]"><span className="text-[#f3ead9]/60 font-normal">Sonntag</span><span className="text-[#f3ead9]/85 font-medium">12:00 – 22:00</span></div>
+              <div className="flex justify-between max-w-[220px]"><span className="text-[#f3ead9]/60 font-normal">Mo – So</span><span className="text-[#f3ead9]/85 font-medium">11:30 – 22:00</span></div>
             </div>
           </div>
         </div>
@@ -2411,7 +2429,6 @@ export default function ToshiSite() {
       <HeroSection onOrderClick={openOrderModal} />
       <TickerStrip />
       <OrderSection onOrderClick={openOrderModal} />
-      <FreshnessSection />
       <MenuSection onItemClick={setModalItem} />
       <AboutSection />
       <PhotoWall />

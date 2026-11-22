@@ -44,7 +44,7 @@ export default function ToshiPreloader({ onDone }) {
             className="relative flex flex-col items-center"
           >
             <motion.img
-              src="/images/Toshi_Logo.webp"
+              src="/images/toshi-logo.webp"
               alt="Toshi"
               initial={{ opacity: 0, scale: 0.94 }}
               animate={{ opacity: 1, scale: 1 }}
